@@ -1,4 +1,13 @@
-const Book = ({ book }) => {
+import BookshelfChanger from "./BookshelfChanger";
+
+const Book = ({ book, changeBookshelf }) => {
+
+  const moveBook = (book, newBookshelf)=>{
+    const originalBookshelf = book.bookshelf;
+    book.bookshelf = newBookshelf;
+    changeBookshelf(originalBookshelf, book, book.bookshelf);
+  }
+
   return (
     <div className="book">
       <div className="book-top">
@@ -10,17 +19,7 @@ const Book = ({ book }) => {
             backgroundImage: book.backgroundImage,
           }}
         ></div>
-        <div className="book-shelf-changer">
-          <select>
-            <option value="none" disabled>
-              Move to...
-            </option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
-          </select>
-        </div>
+       <BookshelfChanger book={book} changeBookshelf ={moveBook}/>
       </div>
       <div className="book-title">{book.name}</div>
       <div className="book-authors">{book.author}</div>

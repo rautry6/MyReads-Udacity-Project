@@ -1,6 +1,6 @@
 import Book from "./Book";
 
-const Bookshelf = ({bookshelfName, books}) =>{
+const Bookshelf = ({bookshelfName, books, changeBookshelf}) =>{
     return(
         <div>
             <div className="bookshelf">
@@ -9,8 +9,8 @@ const Bookshelf = ({bookshelfName, books}) =>{
                   <ol className="books-grid">
                     {books.map((book, index) =>{
                         return(
-                            <li>
-                                 <Book book={book} key={index}/>
+                            <li key = {index}>
+                                 <Book book={book} changeBookshelf = {changeBookshelf}/>
                             </li>
                         )})
                     }
