@@ -1,10 +1,11 @@
 import "./App.css";
 import { useState } from "react";
 import Book from "./Book";
+import Bookshelf from "./Bookshelf";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
-  const [books, setBooks] = useState([
+  const [currentlyReading, setCurrentlyReading] = useState([
   {
     name: "To Kill a Mockingbird",
     author: "Harper Lee",
@@ -21,6 +22,9 @@ function App() {
     height: 188,
     backgroundImage:'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
   },
+])
+
+const [wantToRead, setWantToRead] = useState([
   {
     name: "1776",
     author: "David McCullough",
@@ -37,6 +41,9 @@ function App() {
     height: 192,
     backgroundImage:'url("http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72G3gA5A-Ka8XjOZGDFLAoUeMQBqZ9y-LCspZ2dzJTugcOcJ4C7FP0tDA8s1h9f480ISXuvYhA_ZpdvRArUL-mZyD4WW7CHyEqHYq9D3kGnrZCNiqxSRhry8TiFDCMWP61ujflB&source=gbs_api")',
   },
+])
+
+const [read, setRead] = useState([
   {
     name: "The Hobbit",
     author: "J.R.R. Tolkien",
@@ -61,8 +68,6 @@ function App() {
     height: 192,
     backgroundImage: 'url("http://books.google.com/books/content?id=32haAAAAMAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72yckZ5f5bDFVIf7BGPbjA0KYYtlQ__nWB-hI_YZmZ-fScYwFy4O_fWOcPwf-pgv3pPQNJP_sT5J_xOUciD8WaKmevh1rUR-1jk7g1aCD_KeJaOpjVu0cm_11BBIUXdxbFkVMdi&source=gbs_api")',
   },
-
-
 ])
 
   return (
@@ -94,48 +99,9 @@ function App() {
           </div>
           <div className="list-books-content">
             <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Currently Reading</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    <li>
-                      <Book book = {books[0]}/>
-                    </li>
-                    <li>
-                      <Book book ={books[1]}/>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Want to Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    <li>
-                      <Book book = {books[2]}/>
-                    </li>
-                    <li>
-                      <Book book = {books[3]}/>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">Read</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    <li>
-                      <Book book ={books[4]}/>
-                    </li>
-                    <li>
-                      <Book book ={books[5]}/>
-                    </li>
-                    <li>
-                      <Book book = {books[6]}/>
-                    </li>
-                  </ol>
-                </div>
-              </div>
+              <Bookshelf bookshelfName="Currently Reading" books={currentlyReading}/>
+              <Bookshelf bookshelfName="Want To Read" books={wantToRead}/>
+              <Bookshelf bookshelfName="Read" books={read}/>
             </div>
           </div>
           <div className="open-search">
