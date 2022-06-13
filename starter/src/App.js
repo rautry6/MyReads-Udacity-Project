@@ -9,51 +9,68 @@ import Book from "./Book";
 
 function App() {
   const [books, setBooks] = useState([]);
-  const [searchBook, setSeachBooks] = useState([]);
+  const [searchBook, setSearchBooks] = useState([]);
 
-  const currentlyReading = books.filter(book => book.shelf === "currentlyReading")
-  const wantToRead = books.filter(book => book.shelf === "wantToRead")
-  const read = books.filter(book => book.shelf === "read")
+  const currentlyReading = books.filter(
+    (book) => book.shelf === "currentlyReading"
+  );
+  const wantToRead = books.filter((book) => book.shelf === "wantToRead");
+  const read = books.filter((book) => book.shelf === "read");
 
   useEffect(() => {
-    BooksAPI.getAll().then(books => {
+    BooksAPI.getAll().then((books) => {
       setBooks(books);
-    })
-  }, [])
+    });
+  }, []);
 
-  const updateShelf = async (book, shelf) =>{
+  const updateShelf = async (book, shelf) => {
     await BooksAPI.update(book, shelf);
 
-    let allBooks = await BooksAPI.getAll().then(book => {
+    let allBooks = await BooksAPI.getAll().then((book) => {
       console.log(book);
       return book;
-    })
+    });
 
     setBooks(allBooks);
-  }
+  };
 
-  const searchForBooks = (query) =>{
-    if(query.length > 0){
-      BooksAPI.search(query).then(books =>{
-        setSeachBooks(books);
-      })
-    }else{
-      setSeachBooks([]);
+  const searchForBooks = (query) => {
+    console.log(query)
+    if (query.length > 0) {
+      BooksAPI.search(query).then((books) => {
+        if(books.error){
+          setSearchBooks([]);
+        }else{
+          setSearchBooks(books);
+        }
+      });
+    } else {
+      setSearchBooks([]);
     }
 
-    BooksAPI.getAll().then(books => {
+    BooksAPI.getAll().then((books) => {
       setBooks(books);
-    })
+    });
+  };
+
+  const resetSearch = () =>{
+    setSearchBooks([]);
   }
-  
+
   return (
     <div className="app">
-    {  console.log(currentlyReading)}
+      {console.log(currentlyReading)}
       <Routes>
         <Route
           path="/search"
           element={
-            <SearchPage searchForBooks={searchForBooks}/>
+            <SearchPage
+              searchForBooks={searchForBooks}
+              searchBooks={searchBook}
+              updateShelf={updateShelf}
+              books ={books}
+              resetSearch={resetSearch}
+            />
           }
         />
 

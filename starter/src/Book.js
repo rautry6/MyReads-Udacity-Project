@@ -4,7 +4,6 @@ const Book = ({ book, updateShelf }) => {
 
   return (
     <div className="book">
-    {console.log(book)}
       <div className="book-top">
         <div
           className="book-cover"
@@ -17,7 +16,7 @@ const Book = ({ book, updateShelf }) => {
         <BookshelfChanger book={book} updateShelf={updateShelf}/>
       </div>
       <div className="book-title">{book.title}</div>
-      <div className="book-authors">{book.authors.join(", ")}</div>
+      <div className="book-authors">{book.authors && book.authors.join(", ")}</div>
     </div>
   );
 };
