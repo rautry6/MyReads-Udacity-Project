@@ -1,30 +1,23 @@
 import BookshelfChanger from "./BookshelfChanger";
 
-const Book = ({ book, changeBookshelf }) => {
-
-  const moveBook = (book, newBookshelf)=>{
-     //Updates the books bookshelf value to reflect the new bookshelf they are in and saves the value of the bookshelf they were in before
-    const originalBookshelf = book.bookshelf;
-    book.bookshelf = newBookshelf;
-
-    changeBookshelf(originalBookshelf, book, book.bookshelf);
-  }
+const Book = ({ book, updateShelf }) => {
 
   return (
     <div className="book">
+    {console.log(book)}
       <div className="book-top">
         <div
           className="book-cover"
           style={{
-            width: book.width,
-            height: book.height,
-            backgroundImage: book.backgroundImage,
+            width: 128,
+            height:193,
+            backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail})`,
           }}
         ></div>
-       <BookshelfChanger book={book} changeBookshelf ={moveBook}/>
+        <BookshelfChanger book={book} updateShelf={updateShelf}/>
       </div>
-      <div className="book-title">{book.name}</div>
-      <div className="book-authors">{book.author}</div>
+      <div className="book-title">{book.title}</div>
+      <div className="book-authors">{book.authors.join(", ")}</div>
     </div>
   );
 };

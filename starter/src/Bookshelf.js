@@ -1,6 +1,7 @@
 import Book from "./Book";
 
-const Bookshelf = ({bookshelfName, books, changeBookshelf}) =>{
+const Bookshelf = ({bookshelfName, books, updateShelf}) =>{
+
     return(
         <div>
             <div className="bookshelf">
@@ -10,7 +11,7 @@ const Bookshelf = ({bookshelfName, books, changeBookshelf}) =>{
                     {books.map((book, index) =>{
                         return(
                             <li key = {index}>
-                                 <Book book={book} changeBookshelf = {changeBookshelf}/>
+                                 <Book book={book} updateShelf={updateShelf}/>
                             </li>
                         )})
                     }
