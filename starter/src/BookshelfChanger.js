@@ -1,11 +1,12 @@
 const BookshelfChanger = ({book, changeBookshelf}) =>{
+
     const handleChange = (event) =>{
         changeBookshelf(book, event.target.value)
     }
 
     return(
-        <div className="book-shelf-changer">
-        <select onChange={handleChange}>
+      <div className="book-shelf-changer">
+        <select onChange={handleChange} value={book.bookshelf}>
           <option value="none" disabled>
             Move to...
           </option>
