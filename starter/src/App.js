@@ -1,9 +1,10 @@
 import "./App.css";
 import { useState } from "react";
-import Book from "./Book";
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import Bookshelf from "./Bookshelf";
 
 function App() {
+  let navigate = useNavigate();
   const [showSearchPage, setShowSearchpage] = useState(false);
   const [currentlyReading, setCurrentlyReading] = useState([
   {
@@ -71,9 +72,11 @@ const [read, setRead] = useState([
 ])
 
  const changeBookshelf = (originalBookshelf, book, newBookshelf) =>{
+    //Checks what bookshelf the book was first on and removes it from that shelf
     if(originalBookshelf === "currentlyReading"){
       setCurrentlyReading(currentlyReading.filter(b => b.name !== book.name));
 
+      //Checks what bookshelf the book is being added to and adds it to that shelf
       if(newBookshelf === "currentlyReading"){
         setCurrentlyReading([...currentlyReading, book]);
       }
@@ -84,9 +87,10 @@ const [read, setRead] = useState([
         setRead([...read, book]);
       }
       
-    }else if(originalBookshelf == "wantToRead"){
+    }else if(originalBookshelf === "wantToRead"){
       setWantToRead(wantToRead.filter(b => b.name !== book.name));
 
+      //Checks what bookshelf the book is being added to and adds it to that shelf
       if(newBookshelf === "currentlyReading"){
         setCurrentlyReading([...currentlyReading, book]);
       }
@@ -100,6 +104,7 @@ const [read, setRead] = useState([
     else{
       setRead(read.filter(b => b.name !== book.name));
 
+      //Checks what bookshelf the book is being added to and adds it to that shelf
       if(newBookshelf === "currentlyReading"){
         setCurrentlyReading([...currentlyReading, book]);
       }
@@ -112,14 +117,25 @@ const [read, setRead] = useState([
     }
  }
 
+ const handleSearchPage = () =>{
+   setShowSearchpage(!showSearchPage);
+   if(showSearchPage){
+      navigate("/search");
+   }else{
+    navigate("/");
+   }
+ }
+
   return (
     <div className="app">
-      {showSearchPage ? (
+     <Routes>
+      <Route path = "/search" element ={
         <div className="search-books">
           <div className="search-books-bar">
             <a
+            href="/"
               className="close-search"
-              onClick={() => setShowSearchpage(!showSearchPage)}
+              onClick={handleSearchPage}
             >
               Close
             </a>
@@ -134,7 +150,9 @@ const [read, setRead] = useState([
             <ol className="books-grid"></ol>
           </div>
         </div>
-      ) : (
+      }/> 
+
+      <Route  exact path="/" element={(
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
@@ -147,10 +165,11 @@ const [read, setRead] = useState([
             </div>
           </div>
           <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
+            <a href = "search" onClick={handleSearchPage}>Add a book</a>
           </div>
         </div>
-      )}
+      )}/>
+      </Routes>
     </div>
   );
 }

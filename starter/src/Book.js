@@ -3,8 +3,10 @@ import BookshelfChanger from "./BookshelfChanger";
 const Book = ({ book, changeBookshelf }) => {
 
   const moveBook = (book, newBookshelf)=>{
+     //Updates the books bookshelf value to reflect the new bookshelf they are in and saves the value of the bookshelf they were in before
     const originalBookshelf = book.bookshelf;
     book.bookshelf = newBookshelf;
+
     changeBookshelf(originalBookshelf, book, book.bookshelf);
   }
 
