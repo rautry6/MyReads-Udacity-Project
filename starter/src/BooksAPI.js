@@ -36,7 +36,7 @@ export const search = (query) =>
       ...headers,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ query}),
+    body: JSON.stringify({ query }),
   })
     .then((res) => res.json())
     .then((data) => data.books);

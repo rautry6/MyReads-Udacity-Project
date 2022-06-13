@@ -1,21 +1,13 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import Bookshelf from "./Bookshelf";
+import { Route, Routes,} from "react-router-dom";
 import * as BooksAPI from "./BooksAPI";
-import { Link } from "react-router-dom";
 import SearchPage from "./SearchPage";
-import Book from "./Book";
+import MainPage from "./MainPage";
 
 function App() {
   const [books, setBooks] = useState([]);
   const [searchBook, setSearchBooks] = useState([]);
-
-  const currentlyReading = books.filter(
-    (book) => book.shelf === "currentlyReading"
-  );
-  const wantToRead = books.filter((book) => book.shelf === "wantToRead");
-  const read = books.filter((book) => book.shelf === "read");
 
   useEffect(() => {
     BooksAPI.getAll().then((books) => {
@@ -27,7 +19,6 @@ function App() {
     await BooksAPI.update(book, shelf);
 
     let allBooks = await BooksAPI.getAll().then((book) => {
-      console.log(book);
       return book;
     });
 
@@ -35,12 +26,11 @@ function App() {
   };
 
   const searchForBooks = (query) => {
-    console.log(query)
     if (query.length > 0) {
       BooksAPI.search(query).then((books) => {
-        if(books.error){
+        if (books.error) {
           setSearchBooks([]);
-        }else{
+        } else {
           setSearchBooks(books);
         }
       });
@@ -53,13 +43,12 @@ function App() {
     });
   };
 
-  const resetSearch = () =>{
+  const resetSearch = () => {
     setSearchBooks([]);
-  }
+  };
 
   return (
     <div className="app">
-      {console.log(currentlyReading)}
       <Routes>
         <Route
           path="/search"
@@ -68,7 +57,7 @@ function App() {
               searchForBooks={searchForBooks}
               searchBooks={searchBook}
               updateShelf={updateShelf}
-              books ={books}
+              books={books}
               resetSearch={resetSearch}
             />
           }
@@ -77,37 +66,7 @@ function App() {
         <Route
           exact
           path="/"
-          element={
-            <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-              <div className="list-books-content">
-                <div>
-                  <Bookshelf
-                    bookshelfName="Currently Reading"
-                    books={currentlyReading}
-                    updateShelf={updateShelf}
-                  />
-                  <Bookshelf
-                    bookshelfName="Want To Read"
-                    books={wantToRead}
-                    updateShelf={updateShelf}
-                  />
-                  <Bookshelf
-                    bookshelfName="Read"
-                    books={read}
-                    updateShelf={updateShelf}
-                  />
-                </div>
-              </div>
-              <div className="open-search">
-                <Link to="/search">
-                  <button>Add a book</button>
-                </Link>
-              </div>
-            </div>
-          }
+          element={<MainPage books={books} updateShelf={updateShelf} />}
         />
       </Routes>
     </div>

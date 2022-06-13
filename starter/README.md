@@ -1,6 +1,6 @@
 # MyReads Project
 
-This app is a book keeping that allows the user to add books to their book shelves based on if they are currently reading it, want to read it, or have read it. The user can also search through a limited selection of books to add them to their library as well.
+This app is a book keeping app that allows the user to add books to their book shelves based on if they are currently reading it, want to read it, or have read it. The user can also search through a limited selection of books to add them to their library as well.
 
 ## TL;DR
 
